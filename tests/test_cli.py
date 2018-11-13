@@ -4,28 +4,31 @@ import tempfile
 
 #Setup the fixture
 @pytest.fixture
-def get_parser():
-    return cli.get_parser()
+def create_parser():
+    return cli.create_parser()
 
-@pytest.fixture
-def testfile():
-    f = tempfile.TemporaryFile()
-    f.write(b'Testfile')
-    f.seek(0)
-    return f
-
-def test_get_parser_with_file(testfile):
+def test_get_parser_with_file(create_parser):
     '''
     parser will exit if raised without a file
     '''
     with pytest.raises(SystemExit):
-        get_parser.parse_args()
+        create_parser.parse_args(['--export'])
 
-def test_get_parser_with_flag():
+
+def test_get_parser_with_flag(create_parser):
     '''
     Checks that the parser can accept the flag to export values
     '''
-    pass
+    args = create_parser.parse_args(['/path/to/file.json','--export'])
+    assert args.jsonfile == '/path/to/file.json'
+    assert args.export == True
 
+def test_get_parser_raised_with_nothing(create_parser):
+    '''
+    Checks that the parser will exit if raised with no input
+    '''
+    with pytest.raises(SystemExit):
+        create_parser.parse_args([])
  
-
+def test_that_the_file_can_be_read_from(create_parser):
+    pass
