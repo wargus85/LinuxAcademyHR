@@ -29,6 +29,3 @@ def test_get_parser_raised_with_nothing(create_parser):
     '''
     with pytest.raises(SystemExit):
         create_parser.parse_args([])
- 
-def test_that_the_file_can_be_read_from(create_parser):
-    pass
