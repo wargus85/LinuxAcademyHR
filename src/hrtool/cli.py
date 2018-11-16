@@ -16,3 +16,8 @@ def create_parser():
         default=False)
         
     return parser
+
+def main():
+    if os.geteuid() !=0:
+        print(f"please try again, as super user (sudo)")
+        sys.exit(1)

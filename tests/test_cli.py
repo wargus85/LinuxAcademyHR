@@ -14,6 +14,12 @@ def test_get_parser_with_file(create_parser):
     with pytest.raises(SystemExit):
         create_parser.parse_args(['--export'])
 
+def test_main_exit_without_sudo():
+    '''
+    main will exit if raised being super user
+    '''
+    with pytest.raises(SystemExit):
+        cli.main()
 
 def test_get_parser_with_flag(create_parser):
     '''
