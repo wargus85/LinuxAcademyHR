@@ -1,5 +1,5 @@
 import pytest
-from hr import usermod
+from hrtool import usermod
 
 user = {
     'name':'kevin',
