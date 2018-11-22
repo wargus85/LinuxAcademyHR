@@ -13,6 +13,7 @@ def add_user(name,groups,password):
         except KeyError as Err:
             #the group does not exist so add it in
             addgroup = subprocess.run(['adduser',group])
+            print(f"Creating group: f{group}")
     
     print(f"Adding: {name}")
     try:
@@ -44,5 +45,20 @@ def del_user(name,delete=False):
                 
     
 
-def mod_user(name):
-    pass
+def mod_user(name,groups,password):
+    # Check that the user exists, if not, then create the user with a call
+    # to add_user()
+
+
+    # Check that all the groups exist:
+    for group in groups[0].split(','):
+        try:
+            exists = grp.getgrnam(group)
+        except KeyError as Err:
+            #the group does not exist so add it in
+            addgroup = subprocess.run(['adduser',group])
+            print(f"Creating group: f{group}")
+
+    #Modify the user now that all the groups exist.
+
+    
