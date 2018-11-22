@@ -6,12 +6,23 @@ def add_user(name,groups,password):
     #
     # If adding a user returns an error (ie, the user exists)
     # Then try updating the user instead (call mod_user)
-    print(f"Adding {name}")
+    #need to check that the groups exist
+    for group in groups[0].split(','):
+        try:
+            exists = grp.getgrnam(group)
+        except KeyError as Err:
+            #the group does not exist so add it in
+            addgroup = subprocess.run(['adduser',group])
+    
+    print(f"Adding: {name}")
     try:
         user = pwd.getpwnam(name)
     except KeyError as err:
-        # User does not exist
-        adduser = subprocess.run(['useradd','-m','-s','/bin/bash','-p',password,'-G',groups[0], name],check=True)
+        # User does not exist, so we can go ahead and add
+        with open(os.devnull, 'w') as devnull:
+            adduser = subprocess.run(
+                ['useradd', '-m', '-s', '/bin/bash', '-p', password, '-G', groups[0], name], check=True)
+            print(f"Added user {name}")
 
     
 def del_user(name,delete=False):
@@ -22,7 +33,7 @@ def del_user(name,delete=False):
         try:
             with open(os.devnull, 'w') as devnull:
                 deleteduser = subprocess.run(["userdel", "-r", name], check=True, stdout=devnull,stderr=devnull)
-                print(f"deleted user {name}")
+                print(f"Deleted user {name}")
 
         except subprocess.CalledProcessError as err:
             if err.returncode == 1:
