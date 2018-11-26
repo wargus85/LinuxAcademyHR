@@ -15,8 +15,8 @@ def test_add_existing_user(mocker):
     Test to add a user that already exists will update the user instead
     '''
     mocker.patch('subprocess.run')
-    
-    pass
+    usermod.add_user(user['name'],user['groups'],user['password'])
+    subprocess.run.assert_called_with([user['name'],user['groups'],user['password'])
 
 def test_add_new_user():
     '''

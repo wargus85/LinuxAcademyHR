@@ -3,6 +3,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 .vscode/
+inventory.json
 password.txt
 # C extensions
 *.so
