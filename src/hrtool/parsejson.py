@@ -1,4 +1,5 @@
-import json, sys 
+import json, sys, pwd, subprocess
+
 
 def readfile(filename):
     try:
@@ -10,4 +11,25 @@ def readfile(filename):
     return users
 
 def writefile(filename):
-    pass        
+    #Get all the users with a UID over 999
+    i=1000
+    try:
+        user=pwd.getpwuid(i)
+        password = spwd.getspnam(user.pw_name).sp_pwdp
+        getgroups = subprocess.run(['groups',user.pw_name],stdout=subprocess.PIPE)
+        groupslist= str(getgroups.stdout).split(':')[1].split('\\')[0].strip().split(' ')
+        newgroup=""
+        for group in groupslist:
+            newgroup=newgroup+","+"'"+group+"'"
+        newgroup=newgroup.lstrip(',')
+        blah = {
+            "name":f"'{user.pw_name}'",
+            "groups":f"[{newgroup}]",
+            "password":f"'{password}'",
+            "delete":"False"
+            }
+
+    with open(filename,'w') as f:
+        f.writelines(f"{users}")
+
+            

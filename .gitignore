@@ -5,6 +5,7 @@ __pycache__/
 .vscode/
 inventory.json
 password.txt
+test.json
 # C extensions
 *.so
 
