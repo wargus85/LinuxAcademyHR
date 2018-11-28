@@ -12,8 +12,8 @@ install_requires=[], #This is where the required dependencies go
 packages=find_packages('src'),
 package_dir={'':'src'}, #this is a legacy thing that we do because of the above line
 entry_points={
-    'console-scripts':[
-        'hrtool=hr.cli.main'
-    ]
-}
+    'console_scripts': [
+        'hrtool = hrtool.cli:main'
+        ]
+},
 )
